@@ -41,6 +41,9 @@ namespace DeepMusic
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            // This set's up to use Sqlite instead of SQL server
+            services.AddDbContext<DeepMusicDbContext>(options => options.UseSqlite("Data Source = DeepM.db"));
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
