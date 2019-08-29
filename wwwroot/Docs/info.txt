@@ -1,0 +1,14 @@
+Heading Deep Music
+Rewritten Music Explorer, offering more nodes, better performance and refreshes
+Audio joiner tool
+Heading Auto scan
+Auto scan your music library and build a database of all your music in just a few seconds
+Much more possibilities to restrict user policies
+Advanced filtering support for the Music Explorer, Releases, Artists, Labels, Tracks, Genres and Years. These new filters are per-view and replaces the old global filter.
+Support for Collections and volumes
+Fully customized toolbar for quick access to the tools you prefer
+Support for General purpose plug-ins with a fully open API and sample code
+File synchronization tool with full MTP device support
+Shared playlists support
+Major performance improvements when tagging files
+New versions of our mobile apps
