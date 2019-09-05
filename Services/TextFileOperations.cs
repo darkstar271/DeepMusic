@@ -21,8 +21,8 @@ namespace DeepMusic.Services
         {
             //Gets or sets the absolute path to the directory that contains the web-servable application content files.
             string webRootPath = _hostingEnvironment.WebRootPath;
-            FileInfo filePath = new FileInfo(Path.Combine(webRootPath, "~/Docs/info.txt"));
-            // FileInfo filePath = new FileInfo(Path.Combine(webRootPath, "info.txt"));
+            //FileInfo filePath = new FileInfo(Path.Combine(webRootPath, "~/Docs/info.txt"));
+            FileInfo filePath = new FileInfo(Path.Combine(webRootPath, "info.txt"));
             string[] lines = File.ReadAllLines(filePath.ToString());
             return lines.ToList();
 

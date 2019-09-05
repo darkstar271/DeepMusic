@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DeepMusic.Data;
+using DeepMusic.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -34,16 +35,21 @@ namespace DeepMusic
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            //page 39 Remove the SqlServer and replace it with Sqlite
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("DefaultConnection")));
+            //                              Sqlite
+            // this is the Database for the user names and login
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = Identity.db")); // "Identity" is the Database
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            // This set's up to use Sqlite instead of SQL server
+            // This set's up to use Sqlite instead of SQL server 
             services.AddDbContext<DeepMusicDbContext>(options => options.UseSqlite("Data Source = DeepM.db"));
-
+            // page 38
+            services.AddSingleton<ITextFileOperations, TextFileOperations>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
