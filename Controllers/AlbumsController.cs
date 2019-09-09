@@ -20,9 +20,32 @@ namespace DeepMusic.Controllers
         }
 
         // GET: Albums
+        // Change made to use DTO – Data Transfer Objects.
+        // https://gavilan.blog/2019/03/18/asp-net-core-2-2-data-transfer-objects-dtos-and-automapper/
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Albums.ToListAsync());
+            var Albums = _context.Albums.Select(s => new AlbumsDTO()
+            {
+
+                Album_ID = s.Album_ID,
+                ArtistName = s.ArtistName,
+                Track = s.Track,
+                AlbumCoverPath = s.AlbumCoverPath,
+                Genre = s.Genre,
+                TracksTrack_ID
+
+
+                //Id = s.Id,
+                //Name = s.Name,
+                //Department = s.Department,
+                //VisitorCount = s.VisitorCount
+            }).ToListAsync();
+
+
+            return View(await Albums);
+
+            // old code
+            //return View(await _context.Albums.ToListAsync());
         }
 
         // GET: Albums/Details/5

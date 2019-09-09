@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 namespace DeepMusic.Models
 {
-    public class Albums
+    public class AlbumsDTO
     {
         [Key]
         public int Album_ID { get; set; }
