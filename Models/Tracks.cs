@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-
-namespace DeepMusic.DTO
+namespace DeepMusic.Models
 {
-    public class ArtistDTO
+    public class Tracks
     {
         [Key]
-        public int Artist_ID { get; set; }
-        [Required]
+        public int Track_ID { get; set; }
         public string ArtistName { get; set; }
-        [Required]
         //public string TrackName { get; set; }
         public string Album { get; set; }
-        [Required]
-        public string AlbumCoverPath { get; set; }
+        public string Track { get; set; }
+        //public string AlbumCoverPath { get; set; }
+        public int Time { get; set; }
         public string Genre { get; set; }
-        public Albums Albums { get; set; }
-
+        public Genres Genres { get; set; }
 
 
 

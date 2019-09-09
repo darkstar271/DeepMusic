@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DeepMusic.Data;
 using DeepMusic.Models;
+using DeepMusic.DTO;
 
 namespace DeepMusic.Controllers
 {
@@ -26,19 +27,12 @@ namespace DeepMusic.Controllers
         {
             var Albums = _context.Albums.Select(s => new AlbumsDTO()
             {
-
                 Album_ID = s.Album_ID,
                 ArtistName = s.ArtistName,
                 Track = s.Track,
                 AlbumCoverPath = s.AlbumCoverPath,
                 Genre = s.Genre,
-                TracksTrack_ID
-
-
-                //Id = s.Id,
-                //Name = s.Name,
-                //Department = s.Department,
-                //VisitorCount = s.VisitorCount
+                //  TracksTrack_ID = s.TracksTrack_ID
             }).ToListAsync();
 
 

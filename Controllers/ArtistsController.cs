@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DeepMusic.Data;
 using DeepMusic.Models;
+using DeepMusic.DTO;
 
 namespace DeepMusic.Controllers
 {
@@ -20,9 +21,23 @@ namespace DeepMusic.Controllers
         }
 
         // GET: Artists
+        // Change made to use DTO – Data Transfer Objects.
+        // https://gavilan.blog/2019/03/18/asp-net-core-2-2-data-transfer-objects-dtos-and-automapper/
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Artist.ToListAsync());
+            var Artist = _context.Artist.Select(s => new ArtistDTO()
+            {
+                Artist_ID = s.Artist_ID,
+                ArtistName = s.ArtistName,
+                Album = s.Album,
+                AlbumCoverPath = s.AlbumCoverPath,
+                Genre = s.Genre,
+
+
+
+                //  TracksTrack_ID = s.TracksTrack_ID
+            }).ToListAsync();
+            return View(await Artist);
         }
 
         // GET: Artists/Details/5
