@@ -10,9 +10,9 @@ namespace DeepMusic.DTO
     {
         [Key]
         public int Genres_ID { get; set; }
+
         [Required]
         public string Genre { get; set; }
-        [Required]
         //public string Genre { get; set; }
         // public Albums Albums { get; set; }
     }

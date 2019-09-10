@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 namespace DeepMusic.DTO
 {
-    public class Tracks
+    public class TracksDTO
     {
         [Key]
         public int Track_ID { get; set; }
@@ -16,7 +16,7 @@ namespace DeepMusic.DTO
         //public string AlbumCoverPath { get; set; }
         public int Time { get; set; }
         public string Genre { get; set; }
-        public Genres Genres { get; set; }
+        public GenresDTO Genres { get; set; }
 
 
 

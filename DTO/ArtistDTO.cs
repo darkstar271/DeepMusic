@@ -18,7 +18,7 @@ namespace DeepMusic.DTO
         [Required]
         public string AlbumCoverPath { get; set; }
         public string Genre { get; set; }
-        public Albums Albums { get; set; }
+        public AlbumsDTO Albums { get; set; }
 
 
 
