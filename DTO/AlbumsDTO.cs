@@ -13,7 +13,7 @@ namespace DeepMusic.DTO
         public string ArtistName { get; set; }
         [Required]
         public string Track { get; set; }
-        [Required]
+        //[Required]
         //public string Album { get; set; }
         public string AlbumCoverPath { get; set; }
 

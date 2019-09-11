@@ -25,7 +25,7 @@ namespace DeepMusic.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var Genres = _context.Artist.Select(s => new GenresDTO()
+            var Genres = _context.Genres.Select(s => new GenresDTO()
             {
                 Genres_ID = s.Genres_ID,
                 Genre = s.Genre,
@@ -44,7 +44,7 @@ namespace DeepMusic.Controllers
 
 
 
-            return View(await _context.Genres.ToListAsync());
+            //return View(await _context.Genres.ToListAsync());
         }
 
         // GET: Genres/Details/5

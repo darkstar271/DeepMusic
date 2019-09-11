@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Docs\" />
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\upload\" />
   </ItemGroup>
 
 </Project>
