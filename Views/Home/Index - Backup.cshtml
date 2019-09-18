@@ -1,0 +1,26 @@
+﻿@using System.Collections
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>@ViewBag.Welcome</h1>
+
+<div class="row">
+    <h1 class="display-4">Welcome</h1>
+    <h2>@ViewData["AnotherWelcome"]</h2>
+    @foreach (var item in (IEnumerable)ViewData["Conditions"])
+    {
+        if (item.ToString().Contains("Heading"))
+
+        {
+            <div class="form-group col-md-12">
+                <h3> @item.ToString().Replace("Heading", "")</h3>
+            </div>
+        }
+        else
+        {
+            <div class="form-group col-md-3 text-left">@item.ToString()</div>
+        }
+
+    }
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
