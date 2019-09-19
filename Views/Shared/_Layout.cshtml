@@ -7,13 +7,30 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        @*from new template*@
+        <link href="~/css/all.css" rel="stylesheet" />
+        <link href="~/css/animate.css" rel="stylesheet" />
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/bootstrap-grid.css" rel="stylesheet" />
+        <link href="~/css/bootstrap-reboot.css" rel="stylesheet" />
+        <link href="~/css/carousel.css" rel="stylesheet" />
+        <link href="~/css/colors.css" rel="stylesheet" />
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/lightbox.css" rel="stylesheet" />
+        <link href="~/css/responsive.css" rel="stylesheet" />
+        @*from new template*@
+
+
+
+
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -29,6 +46,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Albums" asp-action="Index">Albums</a>
+                        </li>
+                        @*added for new template*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Artists" asp-action="Index">Artist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tracks" asp-action="Index">Tracks</a>
+                        </li>
+                        @*added for new template*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -56,6 +87,21 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        @*from new template*@
+        <script src="~/js/site.js"></script>
+        <script src="~/js/all.js"></script>
+        <script src="~/js/animate.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script src="~/js/carousel.js"></script>
+        <script src="~/js/custom.js"></script>
+        <script src="~/js/jquery.min.js"></script>
+        <script src="~/js/lightbox.js"></script>
+        <script src="~/js/parallax.js"></script>
+        <script src="~/js/tether.min.js"></script>
+
+
+        @*from new template*@
+
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
