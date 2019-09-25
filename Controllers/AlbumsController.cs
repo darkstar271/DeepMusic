@@ -91,11 +91,18 @@ namespace DeepMusic.Controllers
             }
 
             Albums albums = await _context.Albums.FindAsync(id);
+
+            AlbumsDTO albumsDto = new AlbumsDTO();
+
+            albumsDto.Album_ID = albums.Album_ID;
+            albumsDto.AlbumCoverPath = albums.AlbumCoverPath;
+
+
             if (albums == null)
             {
                 return NotFound();
             }
-            return View(albums);
+            return View(albumsDto);
         }
 
         // POST: Albums/Edit/5
