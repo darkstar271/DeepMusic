@@ -90,7 +90,7 @@ namespace DeepMusic.Controllers
                 return NotFound();
             }
 
-            var albums = await _context.Albums.FindAsync(id);
+            Albums albums = await _context.Albums.FindAsync(id);
             if (albums == null)
             {
                 return NotFound();
