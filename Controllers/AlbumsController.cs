@@ -43,21 +43,34 @@ namespace DeepMusic.Controllers
         }
 
         // GET: Albums/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // Change made to use DTO – Data Transfer Objects.
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var albums = await _context.Albums
-                .FirstOrDefaultAsync(m => m.Album_ID == id);
-            if (albums == null)
+            var albumsDTO = _context.Albums.Select(s => new AlbumsDTO()
+            //.FirstOrDefaultAsync(m => m.Album_ID == id)
+
+            //var Albums = _context.Albums.Select(s => new AlbumsDTO()
+            {
+                Album_ID = s.Album_ID,
+                ArtistName = s.ArtistName,
+                Track = s.Track,
+                AlbumCoverPath = s.AlbumCoverPath,
+                Genre = s.Genre,
+                //  TracksTrack_ID = s.TracksTrack_ID
+            }).FirstOrDefault(m => m.Album_ID == id);
+
+
+            if (albumsDTO == null)
             {
                 return NotFound();
             }
 
-            return View(albums);
+            return View(albumsDTO);
         }
 
         // GET: Albums/Create
@@ -71,8 +84,16 @@ namespace DeepMusic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Album_ID,ArtistName,Track,AlbumCoverPath,Genre")] Albums albums)
+        public IActionResult Create([Bind("Album_ID,ArtistName,Track,AlbumCoverPath,Genre")] AlbumsDTO albumsDTO)
         {
+            var albums = new Albums()
+            {
+                Album_ID = albumsDTO.Album_ID,
+                //// Start here from NetChicken https://github.com/Netchicken/VisistorManagment2019Students/blob/master/Controllers/StaffNamesController.cs
+                // Names next
+
+
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(albums);
