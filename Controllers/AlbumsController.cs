@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using DeepMusic.Data;
 using DeepMusic.Models;
 using DeepMusic.DTO;
+// use #region "any name" and #end region to clean up code
+//     #region method name
+//     #endregion
 
 namespace DeepMusic.Controllers
 {
@@ -42,8 +45,9 @@ namespace DeepMusic.Controllers
             //return View(await _context.Albums.ToListAsync());
         }
 
-        // GET: Albums/Details/5
+
         // Change made to use DTO – Data Transfer Objects.
+        // GET: Albums/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -73,6 +77,8 @@ namespace DeepMusic.Controllers
             return View(albumsDTO);
         }
 
+
+        // Change made to use DTO – Data Transfer Objects.
         // GET: Albums/Create
         public IActionResult Create()
         {
@@ -89,18 +95,23 @@ namespace DeepMusic.Controllers
             var albums = new Albums()
             {
                 Album_ID = albumsDTO.Album_ID,
+                ArtistName = albumsDTO.ArtistName,
+                Track = albumsDTO.Track,
+                AlbumCoverPath = albumsDTO.AlbumCoverPath,
+                Genre = albumsDTO.Genre,
+
                 //// Start here from NetChicken https://github.com/Netchicken/VisistorManagment2019Students/blob/master/Controllers/StaffNamesController.cs
                 // Names next
 
 
-            }
+            };
             if (ModelState.IsValid)
             {
                 _context.Add(albums);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(albums);
+            return View(albumsDTO);
         }
 
         // GET: Albums/Edit/5
@@ -110,20 +121,22 @@ namespace DeepMusic.Controllers
             {
                 return NotFound();
             }
+            var albumsDTO = _context.Albums.Select(s => new AlbumsDTO()
+            {
+                Album_ID = s.Album_ID,
+                ArtistName = s.ArtistName,
+                Track = s.Track,
+                AlbumCoverPath = s.AlbumCoverPath,
+                Genre = s.Genre,
+                //  TracksTrack_ID = s.TracksTrack_ID
+            }).FirstOrDefault(m => m.Album_ID == id);
 
-            Albums albums = await _context.Albums.FindAsync(id);
 
-            AlbumsDTO albumsDto = new AlbumsDTO();
-
-            albumsDto.Album_ID = albums.Album_ID;
-            albumsDto.AlbumCoverPath = albums.AlbumCoverPath;
-
-
-            if (albums == null)
+            if (albumsDTO == null)
             {
                 return NotFound();
             }
-            return View(albumsDto);
+            return View(albumsDTO);
         }
 
         // POST: Albums/Edit/5
@@ -131,12 +144,22 @@ namespace DeepMusic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Album_ID,ArtistName,Track,AlbumCoverPath,Genre")] Albums albums)
+        public async Task<IActionResult> Edit(int id, [Bind("Album_ID,ArtistName,Track,AlbumCoverPath,Genre")] AlbumsDTO albumsDTO)
         {
-            if (id != albums.Album_ID)
+            if (id != albumsDTO.Album_ID)
             {
                 return NotFound();
             }
+
+            var albums = new Albums()
+            {
+                Album_ID = albumsDTO.Album_ID,
+                ArtistName = albumsDTO.ArtistName,
+                Track = albumsDTO.Track,
+                AlbumCoverPath = albumsDTO.AlbumCoverPath,
+                Genre = albumsDTO.Genre
+
+            };
 
             if (ModelState.IsValid)
             {
@@ -160,7 +183,7 @@ namespace DeepMusic.Controllers
             }
             return View(albums);
         }
-
+        // the Delete.cshtlm must be left pointing to the @model DeepMusic.Models.Albums unlike the other one's which point to @model DeepMusic.DTO.AlbumsDTO
         // GET: Albums/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

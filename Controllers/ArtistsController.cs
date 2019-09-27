@@ -32,31 +32,44 @@ namespace DeepMusic.Controllers
                 Album = s.Album,
                 AlbumCoverPath = s.AlbumCoverPath,
                 Genre = s.Genre,
-
-
-
                 //  TracksTrack_ID = s.TracksTrack_ID
             }).ToListAsync();
             return View(await Artist);
         }
 
+
+        // Change made to use DTO – Data Transfer Objects.
         // GET: Artists/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // for some of the method's the async has to be removed, it's not best practices but for this it works. 
+        public IActionResult Details(int? id) // async removed
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var artist = await _context.Artist
-                .FirstOrDefaultAsync(m => m.Artist_ID == id);
-            if (artist == null)
+            // When writing this the braced must be put at end of method
+            var artistDTO = _context.Artist.Select(s => new ArtistDTO()
+            {
+
+                Artist_ID = s.Artist_ID,
+                ArtistName = s.ArtistName,
+                Album = s.Album,
+                AlbumCoverPath = s.AlbumCoverPath,
+                Genre = s.Genre,
+                //here
+            }).FirstOrDefault(m => m.Artist_ID == id);
+
+            //.FirstOrDefaultAsync(m => m.Artist_ID == id);
+            if (artistDTO == null)
             {
                 return NotFound();
             }
 
-            return View(artist);
+            return View(artistDTO);
         }
+
+
 
         // GET: Artists/Create
         public IActionResult Create()
@@ -69,15 +82,26 @@ namespace DeepMusic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Artist_ID,ArtistName,Album,AlbumCoverPath,Genre")] Artist artist)
+        //async removed
+        public IActionResult Create([Bind("Artist_ID,ArtistName,Album,AlbumCoverPath,Genre")] ArtistDTO artistDTO)
         {
+            var artist = new ArtistDTO()
+
+            {
+                Artist_ID = artistDTO.Artist_ID,
+                ArtistName = artistDTO.ArtistName,
+                Album = artistDTO.Album,
+                AlbumCoverPath = artistDTO.AlbumCoverPath,
+                Genre = artistDTO.Genre
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(artist);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();// await , removed
                 return RedirectToAction(nameof(Index));
             }
-            return View(artist);
+            return View(artistDTO);
         }
 
         // GET: Artists/Edit/5
@@ -88,12 +112,22 @@ namespace DeepMusic.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artist.FindAsync(id);
-            if (artist == null)
+            var artistDTO = _context.Artist.Select(s => new ArtistDTO()
+            {
+                Artist_ID = s.Artist_ID,
+                ArtistName = s.ArtistName,
+                Album = s.Album,
+                AlbumCoverPath = s.AlbumCoverPath,
+                Genre = s.Genre,
+            }).FirstOrDefault(m => m.Artist_ID == id);
+
+
+
+            if (artistDTO == null)
             {
                 return NotFound();
             }
-            return View(artist);
+            return View(artistDTO);
         }
 
         // POST: Artists/Edit/5
@@ -101,9 +135,9 @@ namespace DeepMusic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Artist_ID,ArtistName,Album,AlbumCoverPath,Genre")] Artist artist)
+        public async Task<IActionResult> Edit(int id, [Bind("Artist_ID,ArtistName,Album,AlbumCoverPath,Genre")] ArtistDTO artistDTO)
         {
-            if (id != artist.Artist_ID)
+            if (id != artistDTO.Artist_ID)
             {
                 return NotFound();
             }
