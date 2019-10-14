@@ -46,25 +46,36 @@ namespace DeepMusic.Controllers
 
             //return View(await _context.Genres.ToListAsync());
         }
-
+        // Change made to use DTO – Data Transfer Objects.
         // GET: Genres/Details/5
-        public async Task<IActionResult> Details(int? id)
+        //public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var genres = await _context.Genres
-                .FirstOrDefaultAsync(m => m.Genres_ID == id);
-            if (genres == null)
+            var genresDTO = _context.Genres.Select(s => new GenresDTO()
+
+            {
+                Genres_ID = s.Genres_ID,
+                Genre = s.Genre,
+
+
+
+            }).FirstOrDefault(m => m.Genres_ID == id);
+            //= await _context.Genres
+            //.FirstOrDefaultAsync(m => m.Genres_ID == id);
+            if (genresDTO == null)
             {
                 return NotFound();
             }
 
-            return View(genres);
+            return View(genresDTO);
         }
 
+        // Change made to use DTO – Data Transfer Objects.
         // GET: Genres/Create
         public IActionResult Create()
         {
@@ -76,15 +87,25 @@ namespace DeepMusic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Genres_ID,Genre")] Genres genres)
+        public IActionResult Create([Bind("Genres_ID,Genre")] GenresDTO genresDTO)
         {
+
+            var genres = new Genres()
+
+            {
+                Genres_ID = genresDTO.Genres_ID,
+                Genre = genresDTO.Genre,
+            };
+
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(genres);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(genres);
+            return View(genresDTO);
         }
 
         // GET: Genres/Edit/5
@@ -94,13 +115,17 @@ namespace DeepMusic.Controllers
             {
                 return NotFound();
             }
+            var genresDTO = _context.Genres.Select(s => new GenresDTO()
+            {
+                Genres_ID = s.Genres_ID,
+                Genre = s.Genre,
+            }).FirstOrDefault(m => m.Genres_ID == id);
 
-            var genres = await _context.Genres.FindAsync(id);
-            if (genres == null)
+            if (genresDTO == null)
             {
                 return NotFound();
             }
-            return View(genres);
+            return View(genresDTO);
         }
 
         // POST: Genres/Edit/5
@@ -108,12 +133,18 @@ namespace DeepMusic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Genres_ID,Genre")] Genres genres)
+        public async Task<IActionResult> Edit(int id, [Bind("Genres_ID,Genre")] GenresDTO genresDTO)
         {
-            if (id != genres.Genres_ID)
+            if (id != genresDTO.Genres_ID)
             {
                 return NotFound();
             }
+
+            var genres = new Genres()
+            {
+                Genres_ID = genresDTO.Genres_ID,
+                Genre = genresDTO.Genre
+            };
 
             if (ModelState.IsValid)
             {
@@ -135,7 +166,7 @@ namespace DeepMusic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(genres);
+            return View(genresDTO);
         }
 
         // GET: Genres/Delete/5
@@ -155,7 +186,7 @@ namespace DeepMusic.Controllers
 
             return View(genres);
         }
-
+        // the Delete.cshtlm must be left pointing to the @model DeepMusic.Models.Genres unlike the other one's which point to @model DeepMusic.DTO.GenresDTO
         // POST: Genres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

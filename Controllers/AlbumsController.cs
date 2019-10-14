@@ -37,8 +37,6 @@ namespace DeepMusic.Controllers
                 Genre = s.Genre,
                 //  TracksTrack_ID = s.TracksTrack_ID
             }).ToListAsync();
-
-
             return View(await Albums);
 
             // old code
@@ -98,12 +96,10 @@ namespace DeepMusic.Controllers
                 ArtistName = albumsDTO.ArtistName,
                 Track = albumsDTO.Track,
                 AlbumCoverPath = albumsDTO.AlbumCoverPath,
-                Genre = albumsDTO.Genre,
+                Genre = albumsDTO.Genre
 
                 //// Start here from NetChicken https://github.com/Netchicken/VisistorManagment2019Students/blob/master/Controllers/StaffNamesController.cs
                 // Names next
-
-
             };
             if (ModelState.IsValid)
             {
@@ -131,7 +127,6 @@ namespace DeepMusic.Controllers
                 //  TracksTrack_ID = s.TracksTrack_ID
             }).FirstOrDefault(m => m.Album_ID == id);
 
-
             if (albumsDTO == null)
             {
                 return NotFound();
@@ -156,9 +151,8 @@ namespace DeepMusic.Controllers
                 Album_ID = albumsDTO.Album_ID,
                 ArtistName = albumsDTO.ArtistName,
                 Track = albumsDTO.Track,
-                AlbumCoverPath = albumsDTO.AlbumCoverPath,
+                AlbumCoverPath = albumsDTO.AlbumCoverPath,// this will not be used on the web page
                 Genre = albumsDTO.Genre
-
             };
 
             if (ModelState.IsValid)
@@ -181,7 +175,7 @@ namespace DeepMusic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(albums);
+            return View(albumsDTO);
         }
         // the Delete.cshtlm must be left pointing to the @model DeepMusic.Models.Albums unlike the other one's which point to @model DeepMusic.DTO.AlbumsDTO
         // GET: Albums/Delete/5
@@ -201,7 +195,7 @@ namespace DeepMusic.Controllers
 
             return View(albums);
         }
-
+        // Make sure in the views folder /Albums/Delete.cshtml it is pointing to  DeepMusic.Models.Albums, not DeepMusic.DTO.AlbumsDTO.
         // POST: Albums/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

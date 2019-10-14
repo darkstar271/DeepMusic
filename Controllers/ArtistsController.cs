@@ -85,7 +85,7 @@ namespace DeepMusic.Controllers
         //async removed
         public IActionResult Create([Bind("Artist_ID,ArtistName,Album,AlbumCoverPath,Genre")] ArtistDTO artistDTO)
         {
-            var artist = new ArtistDTO()
+            var artist = new Artist()
 
             {
                 Artist_ID = artistDTO.Artist_ID,
@@ -142,6 +142,17 @@ namespace DeepMusic.Controllers
                 return NotFound();
             }
 
+            var artist = new Artist()
+            {
+                Artist_ID = artistDTO.Artist_ID,
+                ArtistName = artistDTO.ArtistName,
+                Album = artistDTO.Album,
+                AlbumCoverPath = artistDTO.AlbumCoverPath,// this will not be used on the web page
+                Genre = artistDTO.Genre
+            };
+
+
+
             if (ModelState.IsValid)
             {
                 try
@@ -162,7 +173,7 @@ namespace DeepMusic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(artist);
+            return View(artistDTO);
         }
 
         // GET: Artists/Delete/5
@@ -182,7 +193,7 @@ namespace DeepMusic.Controllers
 
             return View(artist);
         }
-
+        // Make sure in the views folder /Artists/Delete.cshtml it is pointing to  DeepMusic.Models.Artist, not DeepMusic.DTO.ArtistDTO.
         // POST: Artists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
