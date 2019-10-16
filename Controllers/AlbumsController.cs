@@ -8,10 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using DeepMusic.Data;
 using DeepMusic.Models;
 using DeepMusic.DTO;
+
 // use #region "any name" and #end region to clean up code
 //     #region method name
 //     #endregion
-
+/// <summary>
+/// Normal the controller would be connected to the View, but in this project I have used "DTOs" to control the data.
+/// </summary>
 namespace DeepMusic.Controllers
 {
     public class AlbumsController : Controller
@@ -25,6 +28,8 @@ namespace DeepMusic.Controllers
 
         // GET: Albums
         // Change made to use DTO – Data Transfer Objects.
+        // The changes were made manually but even Microsoft recommend Automapper.
+        // This method just pulls the everything from  Albums and sends it to views/Albums/Index for viewing 
         // https://gavilan.blog/2019/03/18/asp-net-core-2-2-data-transfer-objects-dtos-and-automapper/
         public async Task<IActionResult> Index()
         {
@@ -65,7 +70,6 @@ namespace DeepMusic.Controllers
                 Genre = s.Genre,
                 //  TracksTrack_ID = s.TracksTrack_ID
             }).FirstOrDefault(m => m.Album_ID == id);
-
 
             if (albumsDTO == null)
             {

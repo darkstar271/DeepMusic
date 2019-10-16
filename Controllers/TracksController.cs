@@ -8,7 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using DeepMusic.Data;
 using DeepMusic.Models;
 using DeepMusic.DTO;
-
+// use #region "any name" and #end region to clean up code
+//     #region method name
+//     #endregion
 namespace DeepMusic.Controllers
 {
     public class TracksController : Controller
@@ -31,7 +33,6 @@ namespace DeepMusic.Controllers
                 Track_ID = s.Track_ID,
                 ArtistName = s.ArtistName,
                 Album = s.Album,
-
                 Time = s.Time,
                 Genre = s.Genre,
                 //Genre_ID = s.Genre_ID,
@@ -45,23 +46,31 @@ namespace DeepMusic.Controllers
         }
 
 
-
+        // Change made to use DTO – Data Transfer Objects.
         // GET: Tracks/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tracks = await _context.Tracks
-                .FirstOrDefaultAsync(m => m.Track_ID == id);
-            if (tracks == null)
+            var tracksDTO = _context.Tracks.Select(s => new TracksDTO()
+
+            {
+                Track_ID = s.Track_ID,
+                ArtistName = s.ArtistName,
+                Track = s.Track,
+                Time = s.Time,
+                Genre = s.Genre
+            }).FirstOrDefault(m => m.Track_ID == id);
+
+            if (tracksDTO == null)
             {
                 return NotFound();
             }
 
-            return View(tracks);
+            return View(tracksDTO);
         }
 
         // GET: Tracks/Create
@@ -75,15 +84,27 @@ namespace DeepMusic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Track_ID,ArtistName,Album,Track,Time,Genre")] Tracks tracks)
+        public IActionResult Create([Bind("Track_ID,ArtistName,Album,Track,Time,Genre")] TracksDTO tracksDTO)
         {
+
+
+            var tracks = new Tracks()
+
+            {
+                Track_ID = tracksDTO.Track_ID,
+                ArtistName = tracksDTO.ArtistName,
+                Album = tracksDTO.Album,
+                Track = tracksDTO.Track,
+                Time = tracksDTO.Time,
+                Genre = tracksDTO.Genre
+            };
             if (ModelState.IsValid)
             {
                 _context.Add(tracks);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tracks);
+            return View(tracksDTO);
         }
 
         // GET: Tracks/Edit/5
@@ -94,12 +115,21 @@ namespace DeepMusic.Controllers
                 return NotFound();
             }
 
-            var tracks = await _context.Tracks.FindAsync(id);
-            if (tracks == null)
+            var tracksDTO = _context.Tracks.Select(s => new TracksDTO()
+
+            {
+                Track_ID = s.Track_ID,
+                ArtistName = s.ArtistName,
+                Track = s.Track,
+                Time = s.Time,
+                Genre = s.Genre
+            }).FirstOrDefault(m => m.Track_ID == id);
+
+            if (tracksDTO == null)
             {
                 return NotFound();
             }
-            return View(tracks);
+            return View(tracksDTO);
         }
 
         // POST: Tracks/Edit/5
@@ -107,12 +137,23 @@ namespace DeepMusic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Track_ID,ArtistName,Album,Track,Time,Genre")] Tracks tracks)
+        public async Task<IActionResult> Edit(int id, [Bind("Track_ID,ArtistName,Album,Track,Time,Genre")] TracksDTO tracksDTO)
         {
-            if (id != tracks.Track_ID)
+            if (id != tracksDTO.Track_ID)
             {
                 return NotFound();
             }
+
+            var tracks = new Tracks()
+
+            {
+                Track_ID = tracksDTO.Track_ID,
+                ArtistName = tracksDTO.ArtistName,
+                Album = tracksDTO.Album,
+                Track = tracksDTO.Track,
+                Time = tracksDTO.Time,
+                Genre = tracksDTO.Genre
+            };
 
             if (ModelState.IsValid)
             {
@@ -134,7 +175,7 @@ namespace DeepMusic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tracks);
+            return View(tracksDTO);
         }
 
         // GET: Tracks/Delete/5
