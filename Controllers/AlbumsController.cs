@@ -12,9 +12,10 @@ using DeepMusic.DTO;
 // use #region "any name" and #end region to clean up code
 //     #region method name
 //     #endregion
-/// <summary>
-/// Normal the controller would be connected to the View, but in this project I have used "DTOs" to control the data.
-/// </summary>
+//
+// Normal the controller would be connected to the View, but in this project I have used "DTOs" to control the data.
+// AlbumCoverPath is only used as a place holder for testing , in the final code it will be used to display a picture that has it's location reference in the database and stored in a folder.
+// 
 namespace DeepMusic.Controllers
 {
     public class AlbumsController : Controller
@@ -31,6 +32,7 @@ namespace DeepMusic.Controllers
         // The changes were made manually but even Microsoft recommend Automapper.
         // This method just pulls the everything from  Albums and sends it to views/Albums/Index for viewing 
         // https://gavilan.blog/2019/03/18/asp-net-core-2-2-data-transfer-objects-dtos-and-automapper/
+
         public async Task<IActionResult> Index()
         {
             var Albums = _context.Albums.Select(s => new AlbumsDTO()

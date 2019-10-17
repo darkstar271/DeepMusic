@@ -21,18 +21,19 @@ namespace DeepMusic.Controllers
         }
         public IActionResult Index()
         {
+            // here you would put a switch statement, that could change what info or settings the user is placed with 
             ViewBag.Welcome = "Welcome to DeepMusic 42 is not the answer";
 
 
             ViewData["Conditions"] = _textFileOperations.Loadinfo();
 
-
-
-
-
-
             return View();
         }
+
+
+
+
+
 
         public IActionResult Privacy()
         {

@@ -14,7 +14,9 @@ using DeepMusic.Data;
 using DeepMusic.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+/// <summary>
+/// this project uses Sq-lite , but could just as easily use Sql server or a cloud database.
+/// </summary>
 namespace DeepMusic
 {
     public class Startup
@@ -47,7 +49,8 @@ namespace DeepMusic
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             // This set's up to use Sqlite instead of SQL server 
-            services.AddDbContext<DeepMusicDbContext>(options => options.UseSqlite("Data Source = DeepM.db"));
+            // 
+            services.AddDbContext<DeepMusicDbContext>(options => options.UseSqlite("Data Source = DeepM.db"));// DeepM.db is the name of the data base
             // page 38
             services.AddSingleton<ITextFileOperations, TextFileOperations>();
 
